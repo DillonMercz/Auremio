@@ -1,11 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
-  basePath: '/Auremio',
+  reactStrictMode: true,
   images: {
+    domains: ['images.unsplash.com'],
     unoptimized: true,
   },
-  reactStrictMode: true,
+  output: 'export',
+  basePath: '/Auremio',
+  assetPrefix: '/Auremio/',
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 }
 
 module.exports = nextConfig
