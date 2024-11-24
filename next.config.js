@@ -1,16 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  images: {
-    domains: ['images.unsplash.com'],
-    unoptimized: true,
-  },
   output: 'export',
-  basePath: '/Auremio',
-  assetPrefix: '/Auremio/',
-  eslint: {
-    ignoreDuringBuilds: true,
+  images: {
+    unoptimized: true,
+    domains: ['images.unsplash.com'],
   },
+  // Remove basePath and assetPrefix as they're handled by GitHub Actions
 }
 
 module.exports = nextConfig
