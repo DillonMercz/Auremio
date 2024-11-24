@@ -1,101 +1,199 @@
-import Image from "next/image";
+'use client'
+
+import { motion } from 'framer-motion'
+import Hero from '@/components/Hero'
+import ProductCard from '@/components/ProductCard'
+import ParallaxSection, { FadeInSection } from '@/components/ParallaxSection'
+
+const categories = [
+  {
+    title: "Premium Cigars",
+    description: "Hand-rolled excellence from the world's finest tobacco regions",
+    image: "/images/category-cigars.jpg"
+  },
+  {
+    title: "Luxury Accessories",
+    description: "Essential tools for the distinguished cigar enthusiast",
+    image: "/images/category-accessories.jpg"
+  },
+  {
+    title: "Exclusive Humidors",
+    description: "Preserve your collection in elegant crafted storage",
+    image: "/images/category-humidors.jpg"
+  }
+]
+
+const features = [
+  {
+    title: "Expert Curation",
+    description: "Each product is hand-selected by our team of cigar connoisseurs"
+  },
+  {
+    title: "Premium Quality",
+    description: "We source only the finest materials and craftsmanship"
+  },
+  {
+    title: "Authenticity Guaranteed",
+    description: "Every product comes with a certificate of authenticity"
+  },
+  {
+    title: "White Glove Service",
+    description: "Personalized assistance and expert recommendations"
+  }
+]
+
+const products = [
+  {
+    title: "Cohiba Behike BHK 52",
+    description: "Limited Edition Cuban Cigar",
+    price: "1,250",
+    image: "/images/product-cohiba-behike.jpg",
+    isNew: true
+  },
+  {
+    title: "S.T. Dupont Lighter",
+    description: "Gold-Plated Luxury Lighter",
+    price: "895",
+    image: "/images/product-st-dupont-lighter.jpg"
+  },
+  {
+    title: "Elie Bleu Humidor",
+    description: "Marquetry Collection",
+    price: "3,500",
+    image: "/images/product-elie-bleu-humidor.jpg"
+  },
+  {
+    title: "Davidoff Year of the Dragon",
+    description: "2024 Limited Edition",
+    price: "950",
+    image: "/images/product-davidoff-dragon.jpg",
+    isNew: true
+  }
+]
 
 export default function Home() {
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      className="relative"
+      style={{ position: 'relative' }}
+    >
+      {/* Hero Section */}
+      <ParallaxSection>
+        <Hero
+          title="The Art of Fine Living"
+          subtitle="Discover our curated collection of the world's finest cigars and accessories."
+          backgroundImage="/images/home-hero.jpg"
+          ctaText="Explore Collection"
+          ctaLink="/collections"
+          height="large"
+          align="left"
         />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+      </ParallaxSection>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* Featured Categories */}
+      <section className="py-20 relative" style={{ position: 'relative' }}>
+        <div className="luxury-container relative" style={{ position: 'relative' }}>
+          <FadeInSection>
+            <h2 className="text-3xl md:text-4xl font-serif text-center mb-16">Premium Selection</h2>
+          </FadeInSection>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {categories.map((category, index) => (
+              <FadeInSection key={category.title} delay={index * 0.1}>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="group cursor-pointer relative h-[400px] overflow-hidden rounded-sm"
+                  style={{ position: 'relative' }}
+                >
+                  <div className="absolute inset-0 bg-black/40 z-10" />
+                  <div 
+                    className="absolute inset-0 bg-cover bg-center transform group-hover:scale-105 transition-transform duration-500"
+                    style={{ backgroundImage: `url(${category.image})` }}
+                  />
+                  <div className="absolute inset-0 z-20 flex items-center justify-center p-8">
+                    <div className="text-center">
+                      <h3 className="text-2xl font-serif text-white mb-2">{category.title}</h3>
+                      <p className="text-gray-200 text-sm mb-4">{category.description}</p>
+                      <button className="luxury-button">Shop Now</button>
+                    </div>
+                  </div>
+                </motion.div>
+              </FadeInSection>
+            ))}
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+      </section>
+
+      {/* Luxury Experience Section */}
+      <section className="py-20 bg-gray-50 relative" style={{ position: 'relative' }}>
+        <div className="luxury-container relative" style={{ position: 'relative' }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+            <FadeInSection>
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5 }}
+                className="relative"
+                style={{ position: 'relative' }}
+              >
+                <h2 className="text-3xl md:text-4xl font-serif mb-6">The Auremio Experience</h2>
+                <p className="text-gray-600 mb-8 leading-relaxed">
+                  At Auremio, we believe in the art of fine living. Each product in our collection is carefully selected to ensure the highest quality and authenticity, providing our distinguished clientele with an unparalleled luxury experience.
+                </p>
+                <div className="grid grid-cols-2 gap-8">
+                  {features.map((feature, index) => (
+                    <motion.div
+                      key={feature.title}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: index * 0.1 }}
+                      className="relative"
+                      style={{ position: 'relative' }}
+                    >
+                      <h3 className="text-xl font-serif mb-2">{feature.title}</h3>
+                      <p className="text-gray-600 text-sm">{feature.description}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.div>
+            </FadeInSection>
+            <FadeInSection>
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5 }}
+                className="relative h-[600px] rounded-sm overflow-hidden"
+                style={{ position: 'relative' }}
+              >
+                <div 
+                  className="absolute inset-0 bg-cover bg-center transform transition-transform duration-700 hover:scale-105"
+                  style={{ backgroundImage: "url('/images/luxury-lounge.jpg')" }}
+                />
+              </motion.div>
+            </FadeInSection>
+          </div>
+        </div>
+      </section>
+
+      {/* Latest Products */}
+      <section className="py-20 relative" style={{ position: 'relative' }}>
+        <div className="luxury-container relative" style={{ position: 'relative' }}>
+          <FadeInSection>
+            <h2 className="text-3xl md:text-4xl font-serif text-center mb-16">Latest Arrivals</h2>
+          </FadeInSection>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {products.map((product, index) => (
+              <FadeInSection key={product.title} delay={index * 0.1}>
+                <ProductCard {...product} />
+              </FadeInSection>
+            ))}
+          </div>
+        </div>
+      </section>
+    </motion.div>
+  )
 }

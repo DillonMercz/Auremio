@@ -3,19 +3,282 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --foreground-rgb: 0, 0, 0;
+  --background-rgb: 255, 255, 255;
+  --gold: 200, 170, 110;
+  --dark-gold: 170, 140, 80;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Hide default cursor when custom cursor is active */
+* {
+  cursor: none !important;
+}
+
+/* Hide scrollbar but keep functionality */
+::-webkit-scrollbar {
+  display: none;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-rgb));
+  overflow-x: hidden;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif;
+  }
+}
+
+@layer components {
+  .luxury-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+  
+  .luxury-button {
+    @apply bg-[rgb(var(--gold))] text-white px-8 py-3 
+           transition-all duration-300 ease-in-out
+           font-light tracking-wider uppercase text-sm relative overflow-hidden
+           hover:bg-[rgb(var(--dark-gold))] hover:shadow-lg
+           before:absolute before:inset-0 before:bg-white/20 
+           before:translate-x-[-100%] hover:before:translate-x-[100%] 
+           before:transition-transform before:duration-500
+           after:absolute after:inset-0 after:border after:border-white/20
+           after:opacity-0 hover:after:opacity-100 
+           after:transition-opacity after:duration-300;
+  }
+
+  .nav-link {
+    @apply transition-all duration-200
+           uppercase tracking-wider text-sm font-light relative
+           after:absolute after:bottom-0 after:left-0 after:w-full after:h-px
+           after:bg-[rgb(var(--gold))] after:origin-right after:scale-x-0
+           hover:after:scale-x-100 after:transition-transform after:duration-300;
+  }
+
+  .nav-link.text-white {
+    @apply hover:text-[rgb(var(--gold))];
+  }
+
+  .nav-link.text-gray-900 {
+    @apply hover:text-[rgb(var(--gold))];
+  }
+
+  .luxury-card {
+    @apply relative overflow-hidden bg-white rounded-sm
+           transition-all duration-500 ease-out
+           hover:shadow-xl hover:-translate-y-1
+           before:absolute before:inset-0 before:bg-gradient-to-b
+           before:from-black/5 before:to-transparent before:opacity-0
+           hover:before:opacity-100 before:transition-opacity before:duration-300;
+  }
+
+  .luxury-input {
+    @apply bg-transparent border-b border-gray-200
+           focus:border-[rgb(var(--gold))] focus:outline-none
+           transition-colors duration-300 px-4 py-2;
+  }
+
+  .luxury-gradient {
+    @apply bg-gradient-to-r from-[rgb(var(--gold))] to-[rgb(var(--dark-gold))];
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+@keyframes smoke {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-20px) scale(2);
+    opacity: 0;
+  }
+}
+
+@keyframes ash-fall {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(var(--fall-x), var(--fall-distance)) rotate(var(--rotation));
+    opacity: 0;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+.animate-shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.animate-shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shimmer 2s infinite;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse 3s ease-in-out infinite;
+}
+
+.animate-smoke {
+  animation: smoke 3s ease-out infinite;
+}
+
+.animate-ash {
+  animation: ash-fall var(--fall-duration) ease-out forwards;
+}
+
+/* Hover Effects */
+.hover-lift {
+  @apply transition-all duration-300 ease-out;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.hover-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.hover-shine::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transform: skewX(-25deg);
+  transition: 0.75s;
+}
+
+.hover-shine:hover::after {
+  left: 100%;
+}
+
+/* Luxury Specific Styles */
+.luxury-text-shadow {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.luxury-box-shadow {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.luxury-border {
+  @apply border border-[rgb(var(--gold))] bg-clip-padding backdrop-filter backdrop-blur-sm;
+}
+
+.luxury-divider {
+  @apply relative h-px w-full my-8;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(var(--gold)),
+    transparent
+  );
+}
+
+.luxury-bg-pattern {
+  background-image: radial-gradient(
+    circle at center,
+    rgb(var(--gold)) 1px,
+    transparent 1px
+  );
+  background-size: 24px 24px;
+  opacity: 0.1;
+}
+
+/* Custom Selection */
+::selection {
+  @apply bg-[rgb(var(--gold))] text-white;
+}
+
+/* Custom Cursor Styles */
+.cursor-cigar {
+  @apply fixed pointer-events-none z-50;
+  mix-blend-mode: difference;
+  z-index: 1000000000000000;
+}
+
+.cursor-smoke {
+  @apply fixed pointer-events-none z-50 blur-sm;
+  mix-blend-mode: screen;
+}
+
+.cursor-ash {
+  @apply fixed pointer-events-none z-50 blur-[1px];
+  background: rgba(120, 120, 120, 0.8);
+  width: 2px;
+  height: 2px;
+  border-radius: 50%;
 }
